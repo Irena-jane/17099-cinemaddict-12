@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ирина Романова](https://up.htmlacademy.ru/ecmascript/12/user/17099).
-* Наставник: `Неизвестно`.
+* Наставник: `Kate Savasteeva`.
 
 ---
 
