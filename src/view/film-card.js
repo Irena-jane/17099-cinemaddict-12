@@ -1,10 +1,10 @@
-import {limitFilmDescription} from "../utils";
+import {limitFilmDescription, createElement} from "../utils";
 
 const filterActiveClassName = (filter) => {
   return filter ? `film-card__controls-item--active` : ``;
 };
 
-export const createFilmCardTemplate = (film) => {
+const createFilmCardTemplate = (film) => {
   const {title, poster, description, rating, date, duration, genres, comments, isInWatchlist, isWatched, isFavorite} = film;
 
   return (
@@ -30,3 +30,23 @@ export const createFilmCardTemplate = (film) => {
       </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
+
