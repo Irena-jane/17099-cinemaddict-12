@@ -1,5 +1,21 @@
+import {createElement} from "../utils";
 import {CARD_FILTER_NAMES} from "../const";
 
+const formatFilmDate = (date) => {
+  const _day = date.getDate();
+  const day = _day <= 9 ? `0${_day}` : _day;
+  const month = date.toLocaleString(`en-US`, {month: `long`, year: `numeric`});
+  return `${day} ${month}`;
+};
+const formatCommentDate = (date) => {
+  const dayMonthYear = date
+    .toLocaleString(`ru-RU`, {day: `numeric`, month: `numeric`, year: `numeric`})
+    .split(`.`)
+    .reverse()
+    .join(`/`);
+  const time = date.toLocaleString(`ru-RU`, {hour: `2-digit`, minute: `2-digit`});
+  return `${dayMonthYear} ${time}`;
+};
 const makeSingleOrPlural = (arr) => {
   return arr.length === 1 ? `` : `s`;
 };
@@ -27,7 +43,7 @@ const createControlsTemplate = (...filters) => {
 const createCommentsTemplate = (comments) => {
 
   return comments.map((comment) => {
-    const date = comment.date.toLocaleString(`en-US`, {day: `numeric`, month: `numeric`, year: `numeric`, hour: `2-digit`, minute: `2-digit`});
+    const date = formatCommentDate(comment.date);
     return `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
               <img src="${comment.emoji}" width="55" height="55" alt="emoji-smile">
@@ -37,7 +53,6 @@ const createCommentsTemplate = (comments) => {
               <p class="film-details__comment-info">
                 <span class="film-details__comment-author">${comment.author}</span>
                 <span class="film-details__comment-day">${date}</span>
-                <span class="film-details__comment-day">2019/12/31 23:59</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
@@ -46,7 +61,7 @@ const createCommentsTemplate = (comments) => {
   .join(``);
 };
 
-export const createFilmDetails = (film) => {
+const createFilmDetailsTemplate = (film) => {
   const {title, original, poster, rating, date, duration, genres, age, director, writers, actors, country, description, comments, isWatched, isInWatchlist, isFavorite} = film;
   const genresTemplate = createGenresTemplate(genres);
   const controlsTemplate = createControlsTemplate(isInWatchlist, isWatched, isFavorite);
@@ -92,7 +107,7 @@ export const createFilmDetails = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${date.toLocaleString(`en-US`, {day: `numeric`, month: `long`, year: `numeric`})}</td>
+              <td class="film-details__cell">${formatFilmDate(date)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
@@ -161,3 +176,22 @@ export const createFilmDetails = (film) => {
   </form>
 </section>`;
 };
+
+export default class FilmDetails {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
