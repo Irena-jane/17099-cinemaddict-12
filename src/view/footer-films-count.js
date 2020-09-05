@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import Abstract from "./abstract";
 
 const createFooterFilmsCountTemplate = (count) => {
   return (
@@ -6,21 +6,12 @@ const createFooterFilmsCountTemplate = (count) => {
   );
 };
 
-export default class FooterFilmsCount {
+export default class FooterFilmsCount extends Abstract {
   constructor(count) {
+    super();
     this._count = count;
-    this._element = null;
   }
   getTemplate() {
     return createFooterFilmsCountTemplate(this._count);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {generateDate, getRandomString} from "../utils";
+import {generateDate, getRandomString} from "../utils/common";
 const authors = [
   `John Doe`,
   `Tim Macoveev`,

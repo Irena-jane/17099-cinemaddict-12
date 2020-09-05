@@ -1,5 +1,5 @@
-import {createElement} from "../utils";
 import {CARD_FILTER_NAMES} from "../const";
+import Abstract from "./abstract";
 
 const formatFilmDate = (date) => {
   const _day = date.getDate();
@@ -177,21 +177,22 @@ const createFilmDetailsTemplate = (film) => {
 </section>`;
 };
 
-export default class FilmDetails {
+export default class FilmDetails extends Abstract {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+
+    this._closeBtnClickHandler = this._closeBtnClickHandler.bind(this);
   }
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _closeBtnClickHandler(e) {
+    e.preventDefault();
+    this._callback.closeBtnClick();
   }
-  removeElement() {
-    this._element = null;
+  setCloseBtnClickHandler(callback) {
+    this._callback.closeBtnClick = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeBtnClickHandler);
   }
 }

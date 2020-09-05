@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import Abstract from "./abstract";
 
 const getUserRating = (count) => {
   let rating = ``;
@@ -23,21 +23,12 @@ const createUserProfileTemplate = (watchedFilmsCount) => {
   );
 };
 
-export default class UserProfile {
+export default class UserProfile extends Abstract {
   constructor(watchedFilmsCount) {
+    super();
     this._watchedFilmsCount = watchedFilmsCount;
-    this._element = null;
   }
   getTemplate() {
     return createUserProfileTemplate(this._watchedFilmsCount);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

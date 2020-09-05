@@ -1,4 +1,5 @@
-import {limitFilmDescription, createElement} from "../utils";
+import {limitFilmDescription} from "../utils/common";
+import Abstract from "./abstract";
 
 const filterActiveClassName = (filter) => {
   return filter ? `film-card__controls-item--active` : ``;
@@ -31,22 +32,29 @@ const createFilmCardTemplate = (film) => {
   );
 };
 
-export default class FilmCard {
+export default class FilmCard extends Abstract {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+
+    this._cardClickHandler = this._cardClickHandler.bind(this);
   }
   getTemplate() {
     return createFilmCardTemplate(this._film);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
+  _cardClickHandler(e) {
+    e.preventDefault();
+    const target = e.target;
+    if (!target.classList.contains(`film-card__title`)
+      && !target.classList.contains(`film-card__comments`)
+      && !target.classList.contains(`film-card__poster`)) {
+      return;
     }
-    return this._element;
+    this._callback.cardClick(this._film);
   }
-  removeElement() {
-    this._element = null;
+  setShowDetailsClickHandler(callback) {
+    this._callback.cardClick = callback;
+    this.getElement().addEventListener(`click`, this._cardClickHandler);
   }
 }
 

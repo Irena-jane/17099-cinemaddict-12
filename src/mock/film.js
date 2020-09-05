@@ -1,4 +1,4 @@
-import {getRandomInteger, generateDate, getRandomString, getRandomUniqueStringArr} from "../utils";
+import {getRandomInteger, generateDate, getRandomString, getRandomUniqueStringArr} from "../utils/common";
 import {generateComment} from "./comment";
 
 const titles = [
