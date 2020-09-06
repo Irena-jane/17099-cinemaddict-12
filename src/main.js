@@ -1,7 +1,5 @@
 
 import UserProfileView from "./view/user-profile";
-import MainNavView from "./view/main-nav";
-import SortView from "./view/sort";
 import FooterFilmsCountView from "./view/footer-films-count";
 
 import MovieListPresenter from "./presenter/movie-list";
@@ -11,7 +9,7 @@ import {generateFilters} from "./mock/filters";
 
 import {render} from "./utils/render";
 
-const FILMS_COUNT = 22;
+const FILMS_COUNT = 6;
 
 const films = Array(FILMS_COUNT).fill().map(() => generateFilm());
 const filters = generateFilters(films);
@@ -23,8 +21,5 @@ const siteFooterCountElem = document.querySelector(`.footer__statistics`);
 render(siteHeaderElem, new UserProfileView(filters.history));
 render(siteFooterCountElem, new FooterFilmsCountView(films.length));
 
-render(siteMainElem, new MainNavView(filters));
-render(siteMainElem, new SortView());
-
-const movieListPresenter = new MovieListPresenter(siteMainElem);
+const movieListPresenter = new MovieListPresenter(siteMainElem, filters);
 movieListPresenter.init(films);

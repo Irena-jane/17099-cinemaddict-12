@@ -4,3 +4,8 @@ export const CARD_FILTER_NAMES = [
   `watched`,
   `favorite`
 ];
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};
