@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import Abstract from "./abstract";
 
 const createShowMoreBtnTemplate = () => {
   return (
@@ -6,20 +6,20 @@ const createShowMoreBtnTemplate = () => {
   );
 };
 
-export default class ShowMoreBtn {
+export default class ShowMoreBtn extends Abstract {
   constructor() {
-    this._element = null;
+    super();
+    this._clickHandler = this._clickHandler.bind(this);
   }
   getTemplate() {
     return createShowMoreBtnTemplate();
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _clickHandler(e) {
+    e.preventDefault();
+    this._callback.click();
   }
-  removeElement() {
-    this._element = null;
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().addEventListener(`click`, this._clickHandler);
   }
 }
