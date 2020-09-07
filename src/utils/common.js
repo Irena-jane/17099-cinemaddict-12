@@ -32,3 +32,6 @@ export const sortDateDown = (filmA, filmB) => {
 export const sortRatingDown = (filmA, filmB) => {
   return filmB.rating - filmA.rating;
 };
+export const sortCommentsDown = (filmA, filmB) => {
+  return filmB.comments.length - filmA.comments.length;
+};

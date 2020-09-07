@@ -9,7 +9,7 @@ import {generateFilters} from "./mock/filters";
 
 import {render} from "./utils/render";
 
-const FILMS_COUNT = 6;
+const FILMS_COUNT = 22;
 
 const films = Array(FILMS_COUNT).fill().map(() => generateFilm());
 const filters = generateFilters(films);

@@ -10,7 +10,7 @@ import FilmDetailsView from "../view/film-details";
 import NoFilmsView from "../view/no-films";
 
 import {render, remove, RenderPosition} from "../utils/render";
-import {sortDateDown, sortRatingDown} from "../utils/common";
+import {sortDateDown, sortRatingDown, sortCommentsDown} from "../utils/common";
 import {SortType} from "../const";
 
 const FILMS_COUNT_PER_STEP = 5;
@@ -27,10 +27,10 @@ export default class MovieList {
     this._navComponent = new MainNavView(this._filters);
     this._sortComponent = new SortView();
     this._filmsSectionComponent = new FilmsSectionView();
-    this._filmsListComponent = new FilmsListView();
     this._noFilmsComponent = new NoFilmsView();
-    this._topRated = new FilmsListExtraView(`Top rated`);
-    this._mostCommented = new FilmsListExtraView(`Most Commented`);
+    this._filmsListComponent = null;
+    this._topRated = null;
+    this._mostCommented = null;
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
@@ -64,7 +64,8 @@ export default class MovieList {
 
   }
   _clearFilmsSection() {
-    this._filmsSectionComponent.innerHTML = ``;
+    this._filmsSectionComponent.getElement().innerHTML = ``;
+    this._renderedFilmsCount = FILMS_COUNT_PER_STEP;
   }
   _sortFilms(sortType) {
     switch (sortType) {
@@ -99,6 +100,7 @@ export default class MovieList {
   }
 
   _renderFilmsList() {
+    this._filmsListComponent = new FilmsListView();
     render(this._filmsSectionComponent, this._filmsListComponent, RenderPosition.AFTERBEGIN);
 
     const films = this._films.slice(0, Math.min(this._films.length, FILMS_COUNT_PER_STEP));
@@ -126,13 +128,15 @@ export default class MovieList {
     showMoreBtnComponent.setClickHandler(onShowMoreBtnClick);
   }
   _renderTopRated() {
+    this._topRated = new FilmsListExtraView(`Top rated`);
     render(this._filmsSectionComponent, this._topRated);
     const films = this._films.slice().sort(sortRatingDown).slice(0, FILMS_EXTRA_COUNT);
     this._renderFilms(films, this._topRated);
   }
   _renderMostCommented() {
+    this._mostCommented = new FilmsListExtraView(`Most Commented`);
     render(this._filmsSectionComponent, this._mostCommented);
-    const films = this._films.slice(0, FILMS_EXTRA_COUNT);
+    const films = this._films.slice().sort(sortCommentsDown).slice(0, FILMS_EXTRA_COUNT);
     this._renderFilms(films, this._mostCommented);
   }
   _renderNav() {
