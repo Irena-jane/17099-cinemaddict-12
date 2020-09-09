@@ -26,3 +26,12 @@ export const generateDate = (dateFrom = new Date(1960, 0, 1)) => {
   const date = getRandomInteger(dateFrom.getTime(), dateTo.getTime());
   return new Date(date);
 };
+export const sortDateDown = (filmA, filmB) => {
+  return filmB.date.getTime() - filmA.date.getTime();
+};
+export const sortRatingDown = (filmA, filmB) => {
+  return filmB.rating - filmA.rating;
+};
+export const sortCommentsDown = (filmA, filmB) => {
+  return filmB.comments.length - filmA.comments.length;
+};

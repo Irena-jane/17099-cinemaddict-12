@@ -1,7 +1,5 @@
 
 import UserProfileView from "./view/user-profile";
-import MainNavView from "./view/main-nav";
-import SortView from "./view/sort";
 import FooterFilmsCountView from "./view/footer-films-count";
 
 import MovieListPresenter from "./presenter/movie-list";
@@ -23,8 +21,5 @@ const siteFooterCountElem = document.querySelector(`.footer__statistics`);
 render(siteHeaderElem, new UserProfileView(filters.history));
 render(siteFooterCountElem, new FooterFilmsCountView(films.length));
 
-render(siteMainElem, new MainNavView(filters));
-render(siteMainElem, new SortView());
-
-const movieListPresenter = new MovieListPresenter(siteMainElem);
+const movieListPresenter = new MovieListPresenter(siteMainElem, filters);
 movieListPresenter.init(films);
