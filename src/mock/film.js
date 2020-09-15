@@ -1,6 +1,7 @@
 import {getRandomInteger, generateDate, getRandomString, getRandomUniqueStringArr} from "../utils/common";
 import {generateComment} from "./comment";
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
 const titles = [
   `Лес`,
   `Стажёр старой школы`,
@@ -135,6 +136,7 @@ export const generateFilm = () => {
   const isInWatchlist = getIsInWatchlist(isWatched);
   const isFavorite = isWatched ? Boolean(getRandomInteger(0, 1)) : false;
   return {
+    id: generateId(),
     title,
     poster,
     description,

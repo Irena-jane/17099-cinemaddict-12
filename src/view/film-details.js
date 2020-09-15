@@ -1,4 +1,4 @@
-import {CARD_FILTER_NAMES} from "../const";
+import {CARD_FILTERS} from "../const";
 import Abstract from "./abstract";
 
 const formatFilmDate = (date) => {
@@ -30,11 +30,12 @@ const createControlsTemplate = (...filters) => {
 
   return filters.map((filter, i) => {
     return {
-      name: CARD_FILTER_NAMES[i],
+      name: CARD_FILTERS[i][`name`],
+      type: CARD_FILTERS[i][`type`],
       checked: filter
     };
   })
-    .map((filter) => `<input type="checkbox" class="film-details__control-input visually-hidden" id="${filter.name}" name="${filter.name}" ${filter.checked ? `checked` : ``}>
+    .map((filter) => `<input type="checkbox" class="film-details__control-input visually-hidden" id="${filter.name}" name="${filter.type}" ${filter.checked ? `checked` : ``}>
     <label for="${filter.name}" class="film-details__control-label film-details__control-label--${filter.name}">Add to ${filter.name}</label>`)
     .join(``);
 
@@ -183,6 +184,7 @@ export default class FilmDetails extends Abstract {
     this._film = film;
 
     this._closeBtnClickHandler = this._closeBtnClickHandler.bind(this);
+    this._controlsChangeHandler = this._controlsChangeHandler.bind(this);
   }
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
@@ -191,8 +193,18 @@ export default class FilmDetails extends Abstract {
     e.preventDefault();
     this._callback.closeBtnClick();
   }
+  _controlsChangeHandler(e) {
+    e.preventDefault();
+    console.log(e.target);
+    const controlType = e.target.name;
+    this._callback.controlsChange(controlType);
+  }
   setCloseBtnClickHandler(callback) {
     this._callback.closeBtnClick = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeBtnClickHandler);
+  }
+  setControlsChangeHandler(callback) {
+    this._callback.controlsChange = callback;
+    this.getElement().querySelector(`.film-details__controls`).addEventListener(`change`, this._controlsChangeHandler);
   }
 }

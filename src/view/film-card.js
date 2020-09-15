@@ -21,11 +21,11 @@ const createFilmCardTemplate = (film) => {
         <p class="film-card__description">${limitFilmDescription(description)}</p>
         <a class="film-card__comments">${comments.length} comments</a>
         <form class="film-card__controls">
-          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${filterActiveClassName(isInWatchlist)}">Add to
+          <button data-control-type="isInWatchlist" class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${filterActiveClassName(isInWatchlist)}">Add to
             watchlist</button>
-          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${filterActiveClassName(isWatched)}">Mark as
+          <button data-control-type="isWatched" class="film-card__controls-item button film-card__controls-item--mark-as-watched ${filterActiveClassName(isWatched)}">Mark as
             watched</button>
-          <button class="film-card__controls-item button film-card__controls-item--favorite ${filterActiveClassName(isFavorite)}">Mark as
+          <button data-control-type="isFavorite" class="film-card__controls-item button film-card__controls-item--favorite ${filterActiveClassName(isFavorite)}">Mark as
             favorite</button>
         </form>
       </article>`
@@ -38,6 +38,7 @@ export default class FilmCard extends Abstract {
     this._film = film;
 
     this._cardClickHandler = this._cardClickHandler.bind(this);
+    this._controlsClickHandler = this._controlsClickHandler.bind(this);
   }
   getTemplate() {
     return createFilmCardTemplate(this._film);
@@ -50,11 +51,22 @@ export default class FilmCard extends Abstract {
       && !target.classList.contains(`film-card__poster`)) {
       return;
     }
-    this._callback.cardClick(this._film);
+    this._callback.cardClick();
+  }
+  _controlsClickHandler(e) {
+    e.preventDefault();
+    const btn = e.target;
+    btn.classList.toggle(`film-card__controls-item--active`);
+    const controlType = btn.dataset.controlType;
+    this._callback.controlsClick(controlType);
   }
   setShowDetailsClickHandler(callback) {
     this._callback.cardClick = callback;
     this.getElement().addEventListener(`click`, this._cardClickHandler);
+  }
+  setControlsClickHandler(callback) {
+    this._callback.controlsClick = callback;
+    this.getElement().querySelector(`.film-card__controls`).addEventListener(`click`, this._controlsClickHandler);
   }
 }
 

@@ -35,3 +35,14 @@ export const sortRatingDown = (filmA, filmB) => {
 export const sortCommentsDown = (filmA, filmB) => {
   return filmB.comments.length - filmA.comments.length;
 };
+export const updateItem = (list, update) => {
+  const index = list.findIndex((item) => item.id === update.id);
+  if (index === -1) {
+    return list;
+  }
+  return [
+    ...list.slice(0, index),
+    update,
+    ...list.slice(index + 1)
+  ];
+};
