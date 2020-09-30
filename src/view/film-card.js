@@ -56,7 +56,7 @@ export default class FilmCard extends Abstract {
   _controlsClickHandler(e) {
     e.preventDefault();
     const btn = e.target;
-    btn.classList.toggle(`film-card__controls-item--active`);
+    // btn.classList.toggle(`film-card__controls-item--active`);
     const controlType = btn.dataset.controlType;
     this._callback.controlsClick(controlType);
   }

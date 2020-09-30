@@ -6,6 +6,8 @@ export default class FilmPresenter {
   constructor(listContainer, changeData) {
     this._listContainer = listContainer;
     this._film = null;
+    this._localComment = {};
+
     this._changeData = changeData;
 
     this._filmCardComponent = null;
@@ -26,13 +28,16 @@ export default class FilmPresenter {
 
     replace(this._filmCardComponent, prevFilmCardComponent);
   }
+  _handleLocalCommentChange(newComment) {
+    this._localComment = Object.assign({}, this._localComment, newComment);
+  }
   _handleDetailsChangeData(update) {
     this._film = update;
     this._changeData(update);
   }
   _onFilmCardClick() {
     const filmDetailsPresenter = new FilmDetailsPresenter(this._handleDetailsChangeData);
-    filmDetailsPresenter.init(this._film);
+    filmDetailsPresenter.init(this._film, this._localComment);
   }
   _onControlsClick(controlType) {
     console.log(`from filmPresenter`, controlType);
