@@ -40,7 +40,7 @@ export default class FilmPresenter {
     filmDetailsPresenter.init(this._film, this._localComment);
   }
   _onControlsClick(controlType) {
-    console.log(`from filmPresenter`, controlType);
+    // console.log(`from filmPresenter`, controlType);
     this._changeData(Object.assign(
         {},
         this._film,

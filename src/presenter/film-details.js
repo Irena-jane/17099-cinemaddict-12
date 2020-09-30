@@ -38,7 +38,7 @@ export default class FilmDetailsPresenter {
     );
   }
   _onControlsChange(controlType) {
-    console.log(controlType);
+    // console.log(controlType);
     this._changeFilmData(controlType);
     this._changeData(this._film);
   }

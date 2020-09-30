@@ -180,7 +180,7 @@ export default class FilmDetails extends Abstract {
   }
   _controlsChangeHandler(e) {
     e.preventDefault();
-    console.log(e.target);
+    // console.log(e.target);
     const controlType = e.target.name;
     this._callback.controlsChange(controlType);
   }
