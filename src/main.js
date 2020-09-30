@@ -1,6 +1,15 @@
 
 import UserProfileView from "./view/user-profile";
 import FooterFilmsCountView from "./view/footer-films-count";
+import Api from "./api";
+
+const AUTHORIZATION = `Basic eo0w590ik29889a`;
+const END_POINT = `https://12.ecmascript.pages.academy/cinemaddict`;
+const api = new Api(END_POINT, AUTHORIZATION);
+
+api.getFilms().then((movies) => {
+  console.log(movies);
+});
 
 import MovieListPresenter from "./presenter/movie-list";
 
