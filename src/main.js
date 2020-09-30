@@ -8,7 +8,8 @@ const END_POINT = `https://12.ecmascript.pages.academy/cinemaddict`;
 const api = new Api(END_POINT, AUTHORIZATION);
 
 api.getFilms().then((movies) => {
-  console.log(movies);
+  // console.log(movies);
+  generateFilters(movies);
 });
 
 import MovieListPresenter from "./presenter/movie-list";

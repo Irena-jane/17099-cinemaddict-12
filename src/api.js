@@ -38,7 +38,7 @@ export default class Api {
       .catch(Api.checkStatus);
   }
   static checkStatus(response) {
-    console.log(response.status);
+    // console.log(response.status);
     if (response.status < SuccessHTTPStatusRange.MIN
       && response.status > SuccessHTTPStatusRange.MAX) {
       throw new Error(`${response.status}: ${response.statusText}`);
